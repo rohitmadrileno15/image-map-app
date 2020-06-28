@@ -1,1 +1,1 @@
-# image-map-app
+# Image-Map

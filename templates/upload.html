@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+{% block content %}
+<br>
+  <h1></h1>
+
+<div class = 'content-section'>
+
+  {{hidden_msg}}
+
+  <form method = 'POST' action = '' enctype="multipart/form-data">
+    {{form.hidden_tag()}}
+    <fieldset class = "form-group">
+      <legend class = "border-bottom mb-4">
+
+          <p class="h2">Upload a new pic</p>
+
+
+        </legend>
+
+
+
+
+              <div class = "form-group">
+                {{form.image_url.label(class = "form-control-label" ) }}
+<br>
+                {% if form.image_url.errors %}
+
+                {{form.image_url(class= "form-control form-control-lg is-invalid" ,class="btn btn-dark") }}
+
+                <div class = "invalid-feedback">
+
+                  {% for errors in form.image_url.errors %}
+              <span>
+
+              {{error}}
+              </span>
+                  {% endfor %}
+
+
+                  </div>
+
+                  {% else %}
+
+              {{form.image_url(class= "form-control form-control-lg" ,class="btn btn-dark")}}
+
+                {% endif %}
+
+
+              </div>
+
+
+
+
+
+</fieldset>
+
+
+              <div class = "form-group">
+                {{form.submit(class= "btn btn-outline-info")}}
+
+              </div>
+
+
+
+ 
+
+
+
+
+  </form>
+
+
+
+
+
+</div>
+{% endblock content %}
