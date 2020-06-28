@@ -3,7 +3,6 @@ A web app for photography enthusiasts that lets users share picture and which ge
 
 ![map-image](https://res.cloudinary.com/samadritsarkar/image/upload/v1593327923/image-map/63-630819_location-clipart-flat-map-location-map-clip-art_xzrd08.png)
 
-[View Live Preview](http://image-map-app.herokuapp.com/)
 
 ## Features -
 * Upload image files taken from mobile. 
