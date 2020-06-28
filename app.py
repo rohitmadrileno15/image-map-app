@@ -141,7 +141,9 @@ def images_with_map():
 
     return render_template("getDistance.html" )
 
-
+@app.errorhandler(404)
+def not_found(e):
+    return render_template("404error.html")
 
 
 if __name__ == '__main__':
