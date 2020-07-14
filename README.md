@@ -20,3 +20,5 @@ Again, if you have been to a place and got wonderful pics, you can simply upload
 
 Contact if any problem persists during runninng the application!
 
+## License 
+Distribution under MIT License. See ```LICENSE``` for more.
