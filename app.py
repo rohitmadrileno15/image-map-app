@@ -85,26 +85,6 @@ def upload():
 @app.route('/images_with_map', methods=['GET', 'POST'])
 def images_with_map():
 
-
-    # print()
-    #
-    # import requests
-    # import json
-    # print("UI")
-    # print(request.environ['REMOTE_ADDR'])
-    #
-    # url = "http://ip-api.com/json/" + request.environ['REMOTE_ADDR']
-    # # url = f"http://ip-api.com/json/157.40.199.29"
-    # print(url)
-    # response = requests.get(url)
-    # print((response.text))
-    # get_tex = (response.text)
-    # res = json.loads(get_tex)
-    #
-    # # print (res['latitude'])
-    # # print (res['longitude'])
-
-
     geo_data_info = Post.query.all()
 
 
