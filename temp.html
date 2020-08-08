@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Marker Custom Icons Example</title>
+      <link rel = "stylesheet" href = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
+      <script src = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+   </head>
+   
+   <body>
+      <div id = "map" style = "width:900px; height:580px"></div>
+      <script>
+         // Creating map options
+         var mapOptions = {
+            center: [17.438139, 78.395830],
+            zoom: 10
+         }
+         // Creating a map object
+         var map = new L.map('map', mapOptions);
+         
+         // Creating a Layer object
+         var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+
+         // Adding layer to the map
+         map.addLayer(layer);
+         
+         // Icon options
+         var iconOptions = {
+            iconUrl: 'logo.png',
+            iconSize: [50, 50]
+         }
+         // Creating a custom icon
+         var customIcon = L.icon(iconOptions);
+         
+         // Creating Marker Options
+         var markerOptions = {
+            title: "MyLocation",
+            clickable: true,
+            draggable: true,
+      
+         }
+         // Creating a Marker
+         var marker = L.marker([17.438139, 78.395830], markerOptions);
+         
+         // Adding popup to the marker
+         marker.bindPopup('Hi welcome to Tutorialspoint').openPopup();
+         
+         // Adding marker to the map
+         marker.addTo(map);
+	console.log(marker.getLatLng());
+      </script>
+   </body>
+   
+</html>

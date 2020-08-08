@@ -20,7 +20,7 @@ db = SQLAlchemy(app)
 
 class Post(db.Model):
     id = db.Column(db.Integer,primary_key= True)
-
+    caption_ = db.Column(db.String(100), nullable = False)
     image_latitude = db.Column(db.String(100), nullable = False)
     image_longitude = db.Column(db.String(100), nullable = False)
 
@@ -32,6 +32,7 @@ class Post(db.Model):
 
 
 class UploadForm(FlaskForm):
+    caption_field = StringField('Caption' , validators=[DataRequired()])
     image_url = FileField('Image File' , validators = [DataRequired()])
     submit = SubmitField ("Upload")
 
@@ -42,6 +43,7 @@ def save_picture(form_picture):
     f_name , f_ext = os.path.splitext(form_picture.filename)
     fn = hashed_caption+f_name
     picture_fn = fn + f_ext
+    print(picture_fn)
     picture_path = os.path.join(app.root_path , 'static' , picture_fn)
     form_picture.save(picture_path)
     return picture_fn
@@ -57,10 +59,8 @@ def home():
 @app.route('/upload', methods = ["GET" ,  "POST"] )
 def upload():
     form = UploadForm()
-    print("1")
 
     if (form.validate_on_submit()):
-        print("2")
         img = form.image_url.data
         picture_file = save_picture(form.image_url.data)
         print("done")
@@ -69,12 +69,13 @@ def upload():
         if(map_results != "ERROR"):
             image_longitude = map_results.split(",")[1]
             image_latitude = map_results.split(",")[0]
-            newFile = Post(image_longitude = image_longitude , image_latitude = image_latitude, image_pic = picture_file )
+            image_caption = form.caption_field.data
+            newFile = Post(caption_  = image_caption ,image_longitude = image_longitude , image_latitude = image_latitude, image_pic = picture_file )
             db.session.add(newFile)
             db.session.commit()
-            return "<h1> DONE! <br>  <a href='/'> Go to home </a> </h1>"
+            return "<div> <h1> DONE! <br>  <a href='/images_with_map'> See the map? </a> or <a href='/'> Go to home </a> </h1> </div>"
         else:
-            return "<h1> CHECK IMAGE! UPLOAD IMAGES DIRECTLY TAKEN FROM YOUR PHONE AND NOT THE ONES SHARED ON SOCIAL MEDIA. THIS IS DONE AS FOR MAINTAINING AUTHENTICITY! </h1>"
+            return render_template('authenticity.html')
 
     else:
         return render_template('upload.html', form = form )
@@ -86,6 +87,11 @@ def upload():
 def images_with_map():
 
     geo_data_info = Post.query.all()
+    greet = "No images have been uploaded yet! Try uploading some!"
+    print( "geo_data_info" , geo_data_info)
+    if(len(geo_data_info) == 0):
+        return render_template("getDistance.html" , data_alert = greet )
+
 
 
     empty_data_arr = []
@@ -95,12 +101,12 @@ def images_with_map():
 
         def_long = float(request.form.get("textlon"))
 
-
         print(def_lat)
         print(def_long)
-        def_data = [def_lat , def_long]
+
         distance = int(request.form.get("cars"))
         print("distance" , distance)
+        def_data = [def_lat , def_long , distance * 1000]
 
 
         for row in geo_data_info:

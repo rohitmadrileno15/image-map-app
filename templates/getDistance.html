@@ -761,7 +761,15 @@ float: right;
         <h4 >&copy; Image-Map 2020</h4>
     </div>
 </div>
+<script>    
+    {% if data_alert %}
+    let aer = "inject"
+    
+    alert("{{data_alert}}");
 
+    {% endif %}
+
+</script>
 
 <script type="text/javascript">
 var x = document.getElementById('lat') ;

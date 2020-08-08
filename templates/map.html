@@ -713,7 +713,18 @@ float: right;
 
 </div><!--hero-background-->
 
+<script>
+    {% if data_alert %}
+
+        alert("{{data_alert}}")
+    
+    {% endif %}
+</script>
+
 <div class="container">
+    <br>
+    <a style="font-size: 18px;" href="/images_with_map"class="badge badge-pill badge-info">Go back</a>
+    <br>
 {% if data_value_all_maps %}
   <h2 style="padding-left:20px;"class="light">Photos nearby...</h2>
   <br>
@@ -827,6 +838,7 @@ float: right;
     obj_temp = {
        "lat": {{data_row.image_latitude|tojson}},
        "lng":  {{data_row.image_longitude|tojson}},
+       "caption_data" : {{data_row.caption_|tojson}}
       }
 
       markers.push(obj_temp)
@@ -846,18 +858,30 @@ float: right;
     accessToken: 'pk.eyJ1Ijoic2FtYWRyaXRzYXJrYXIyIiwiYSI6ImNrYnh1b3QyYTB0aGszNG14MzZnMWVoc3EifQ.XODK9NtOyJQ-pSwQ2LtC-A'
     }).addTo(mymap);
 
+ 
+
     for(let i=0; i< markers.length; i++)
     {
     L.marker([markers[i].lat, markers[i].lng])
-    .bindPopup(`<a href="${markers[i].url}">${markers[i].name}</a>`)
+    .bindPopup(markers[i].caption_data)
     .addTo(mymap);
     }
+
+ 
 
     var popup = L.popup()
     .setLatLng([{{def_data[0]|tojson}}  , {{def_data[1]|tojson}}])
     .setContent("You are here")
     .addTo(mymap);
 
+    var circle = L.circle([{{def_data[0]|tojson}}  , {{def_data[1]|tojson}}], {
+        color: '#005dfd',
+        fillColor: '#03e8fb',
+        fillOpacity: 0.5,
+        radius: {{def_data[2]|tojson}}
+    }).addTo(mymap);
+
+    console.log("distance" , {{def_data[2]|tojson}})
 
 
     </script>
