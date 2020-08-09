@@ -834,17 +834,9 @@ float: right;
 var lat = 23.841439;
 var lang = 91.297483;
 
-    {% for data_row in data_value_all_maps %}
+  
 
-    obj_temp = {
-       "lat": {{data_row.image_latitude|tojson}},
-       "lng":  {{data_row.image_longitude|tojson}},
-       "caption_data" : {{data_row.caption_|tojson}}
-      }
-
-      markers.push(obj_temp)
-
-      {% endfor %}
+     
 
     var mymap = L.map("mapid").setView([23.841439  , 91.297483], 10);
 
@@ -861,13 +853,7 @@ var lang = 91.297483;
 
  
 
-    for(let i=0; i< markers.length; i++)
-    {
-    L.marker([markers[i].lat, markers[i].lng])
-    .bindPopup(markers[i].caption_data)
-    .addTo(mymap);
-    }
-
+  
  
 
     // var popup = L.popup()
@@ -893,7 +879,7 @@ var lang = 91.297483;
         console.log(dragMarker.getLatLng().lng)
     })
 
-    console.log("distance" , {{def_data[2]|tojson}})
+
 
 
     </script>
