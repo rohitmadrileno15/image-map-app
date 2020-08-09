@@ -753,6 +753,7 @@ float: right;
 
 </div>
 
+<p id="demo"></p>
 
 </div><!--white-section-text-section--->
 
@@ -772,26 +773,25 @@ float: right;
 </script>
 
 <script type="text/javascript">
-var x = document.getElementById('lat') ;
-var y = document.getElementById('lon') ;
-
-
-
-
+    var x = document.getElementById('lat') ;
+    var y = document.getElementById('lon') ;
 
 function getLocation() {
   if (navigator.geolocation) {
+ 
     navigator.geolocation.getCurrentPosition(showPosition);
   } else {
-
     document.getElementById("demo").innerHTML = "Geolocation is not supported by this browser.";;
 
   }
 }
 
 function showPosition(position) {
-  x.value =   position.coords.latitude;
-y.value =  position.coords.longitude;
+    alert("Got Value")
+     x.value =   position.coords.latitude;
+
+    y.value =  position.coords.longitude;
+    console.log(position.coords.latitude , position.coords.longitude)
 }
 
 </script>

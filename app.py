@@ -101,6 +101,7 @@ def linked_upload():
 def images_with_map():
 
     geo_data_info = Post.query.all()
+
     greet = "No images have been uploaded yet! Try uploading some!"
     print( "geo_data_info" , geo_data_info)
     if(len(geo_data_info) == 0):
@@ -124,28 +125,34 @@ def images_with_map():
 
 
         for row in geo_data_info:
-             print("")
-             lat1= (row.image_latitude)
-             long1 = (row.image_longitude)
+            print("")
+            lat1= (row.image_latitude)
+            long1 = (row.image_longitude)
              # print(lat1)
              # print(long1)
-             displacement = geo_data_of_distance( float(def_lat) , float(def_long) , float(lat1) , float(long1) )
-             print(displacement)
+            print(row)
+            displacement = geo_data_of_distance( float(def_lat) , float(def_long) , float(lat1) , float(long1) )
+            print("displacement ",  displacement) 
 
-             if (distance > displacement or distance == displacement):
-                 print("appended")
-                 empty_data_arr.append(row)
+            if (distance > displacement or distance == displacement):
+                
+                print("appended")
+                empty_data_arr.append(row)
 
-             print(empty_data_arr)
-             return render_template('map.html' , def_data = def_data , data_value_all_maps = empty_data_arr )
+            print(empty_data_arr)
+        return render_template('map.html' , def_data = def_data , data_value_all_maps = empty_data_arr )
 
     return render_template("getDistance.html" )
 
 
-@app.route('/success', methods=['GET'])
+@app.route('/success')
 def success():
     return render_template("authenticity.html" )
 
+@app.route('/admin')
+def admin():
+    all_vals = Post.query.all()
+    return render_template("admin.html" , all_values = all_vals )
 
 @app.errorhandler(404)
 def not_found(e):
