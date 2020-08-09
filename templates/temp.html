@@ -1,0 +1,891 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Image Map</title>
+    <meta name="Nova theme" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/png" href="assets/images/favicon.png"/>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
+          <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+          integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+          crossorigin=""/>
+      <!-- Make sure you put this AFTER Leaflet's CSS -->
+       <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+       integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+       crossorigin=""></script>
+    <!-- <link rel="stylesheet" href="assets/css/style.css"/>
+    <link rel="stylesheet" href="assets/css/responsive.css"/> -->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700');
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    height: 100%;
+    width: 100%;
+}
+
+#mapid {
+    height: 80%;
+    width: 80%;
+}
+
+.mapsection {
+    margin-top: 1rem;
+    margin-left: 0.5rem;
+}
+
+.header-right {
+    display: none;
+}
+
+.navbar-item {
+    color: #ffffff;
+    padding: 10px;
+}
+
+.navbar-item:hover {
+    color: #58d5f7;
+    text-decoration: none;
+}
+
+.hero-background {
+    overflow: hidden;
+    position: relative;
+    background: -webkit-linear-gradient(117deg, rgb(96, 87, 246), rgb(216, 71, 99));
+    background: linear-gradient(117deg, rgb(96, 87, 246), rgb(216, 71, 99));
+    background: -webkit-radial-gradient(rgb(194, 74, 126), rgb(105, 86, 235));
+    background: radial-gradient(rgb(194, 74, 126), rgb(105, 86, 235));
+}
+
+.bold {
+    font-weight: 600;
+}
+
+.light {
+    font-weight: 400;
+}
+
+.navbar-header {
+    color: #F8F9F9;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.header {
+    padding-top: 35px;
+    width: 100%;
+    height: 100px;
+    position: relative;
+    z-index: 999;
+}
+
+.logo {
+    max-width: 100px;
+    padding-left: 0;
+    padding-top: 5px;
+}
+
+.header-btn {
+    background-color: #0ABCEB;
+    border-radius: 10px;
+    border: #0ABCEB;
+    float: right;
+    width: 195px;
+    height: 51px;
+    color: white;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    margin-top: -10px;
+}
+
+.header-btn:hover {
+    background-color: #58d5f7;
+    color: white;
+    border-radius: 20px;
+    -webkit-box-shadow: -1px 9px 46px -17px rgba(43, 43, 43, 1);
+    -moz-box-shadow: -1px 9px 46px -17px rgba(43, 43, 43, 1);
+    box-shadow: -1px 9px 46px -17px rgba(43, 43, 43, 1);
+}
+
+.hero {
+    position: relative;
+    z-index: 999;
+    padding-bottom: 60px;
+}
+
+.mouse {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 85%;
+    margin: auto;
+    padding-bottom: 40px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform .4s ease;
+}
+
+.mouse:hover {
+    transform: translateY(5px);
+}
+
+.macbook {
+    margin: auto;
+    padding-bottom: 35px;
+}
+
+.hero-right {
+    color: #fff;
+    text-align: center;
+}
+
+.ipad {
+    display: none;
+}
+
+.ipad-screen {
+    display: none;
+}
+
+.hero-btn {
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    background-color: #25F18B;
+    border-radius: 10px;
+    border: 1px solid #25F18B;
+    width: 210px;
+    height: 51px;
+    color: white;
+    margin: 30px auto;
+}
+
+.hero-btn:hover {
+    background-color: #6affb4;
+    color: white;
+    border-radius: 20px;
+    -webkit-box-shadow: -1px 9px 46px -17px rgba(43, 43, 43, 1);
+    -moz-box-shadow: -1px 9px 46px -17px rgba(43, 43, 43, 1);
+    box-shadow: -1px 9px 46px -17px rgba(43, 43, 43, 1);
+}
+
+.header-headline {
+    padding-top: 0;
+    padding-bottom: 15px;
+    text-align: center;
+}
+
+.header-running-text {
+    text-align: center;
+    max-width: 287px;
+    line-height: 1.5;
+    margin: auto;
+}
+
+.logos-section {
+    background-color: #F9FAFA;
+    text-align: center;
+}
+
+.logos {
+    padding: 30px;
+    max-width: 100%;
+}
+
+.features-section {
+    background-color: black;
+    padding-top: 40px;
+    padding-bottom: 80px;
+    text-align: center;
+    padding-bottom: 90px;
+    position: relative;
+}
+
+.features-headline {
+    color: white;
+    padding-bottom: 30px;
+}
+
+.features-container {
+    max-width: 830px;
+    margin: auto;
+}
+
+.feature {
+    text-align: center;
+    padding: 30px;
+}
+
+.feature-no-display {
+    opacity: 0;
+    -webkit-transform: translateY(15%) translateZ(0);
+    -moz-transform: translateY(15%) translateZ(0);
+    transform: translateY(15%) translateZ(0);
+    -webkit-transition: -webkit-transform 0.4s ease-out, opacity 0.4s ease;
+    -moz-transition: -moz-transform 0.4s ease-out, opacity 0.4s ease;
+    -o-transition: -o-transform 0.4s ease-out, opacity 0.4s ease;
+    transition: transform 0.4s ease-out, opacity 0.4s ease;
+}
+
+.feature-display {
+    opacity: 1;
+    -webkit-transform: translateY(0) translateZ(0);
+    -moz-transform: translateY(0) translateZ(0);
+    transform: translateY(0) translateZ(0);
+}
+
+.feature-display-mid {
+    transition-delay: 0.15s;
+}
+
+.feature-display-last {
+    transition-delay: 0.30s;
+}
+
+.feature-icon {
+    background-color: white;
+    border-radius: 50%;
+    height: 5.625em;
+    width: 5.625em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    box-shadow: 4px 14px 28px #393939;
+}
+
+.feature-head-text {
+    color: white;
+    padding-top: 15px;
+}
+
+.feature-subtext {
+    color: white;
+    padding-top: 0;
+}
+
+.feature-img {
+    max-width: 23px;
+}
+
+.white-section {
+    max-width: 1400px;
+    margin: auto;
+    overflow: hidden;
+
+}
+
+.white-section-text {
+    text-align: center;
+}
+
+
+
+.imac-section-header {
+    padding-bottom: 35px;
+}
+
+.imac-section-desc {
+    text-align: center;
+    font-weight: 300;
+    font-size: 24px;
+    line-height: 40px;
+    max-width: 400px;
+    margin: auto;
+    padding-bottom: 40px;
+}
+
+.imac-screen {
+    padding-top: 60px;
+    padding-bottom: 40px;
+}
+
+.macbook {
+    position: relative;
+    z-index: 999;
+}
+
+.pricing-background {
+    background-color: #F8F9F9;
+}
+
+.pricing-section-header {
+    padding-top: 75px;
+}
+
+.pricing-section-sub {
+    padding-top: 10px;
+    color: grey;
+}
+
+.pricing-table {
+    padding: 0 0 100px;
+    max-width: 1050px;
+    margin: auto;
+}
+
+.plan {
+    text-align: center;
+    max-width: 390px;
+    margin: auto;
+    height: 430px;
+    padding: 36px 15px 45px;
+    position: relative;
+}
+
+.mid-plan {
+    text-align: center;
+    max-width: 390px;
+    margin: auto;
+    height: 430px;
+    padding: 36px 15px 45px;
+    position: relative;
+    box-shadow: 5px 8.7px 40px rgba(99, 117, 138, 0.3);
+    border-radius: 7px;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.plan li {
+    position: relative;
+}
+
+.plan li::before, .mid-plan li:before {
+    font-family: Material Icons;
+    content: "check";
+    color: #3aeb8c;
+    position: absolute;
+    left: -10px;
+    position: relative;
+
+}
+
+.plan-title {
+    font-size: 18px;
+    padding-bottom: 5px;
+}
+
+.plan-cost {
+    font-size: 45px;
+}
+
+.plan-cost::before {
+    content: "$";
+}
+
+.monthly {
+    font-size: 12px;
+    padding-bottom: 20px;
+}
+
+.plan-features {
+    -webkit-padding-start: 0;
+}
+
+.plan-btn {
+    background-color: #0ABCEB;
+    border-radius: 10px;
+    border: #0ABCEB;
+    width: 164px;
+    height: 51px;
+    color: white;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    display: block;
+    padding: 15px;
+    margin: auto;
+    position: absolute;
+    left: calc(50% - 82px);
+    bottom: 50px;
+}
+
+.plan-btn:hover {
+    background-color: #58d5f7;
+    color: white;
+    border-radius: 20px;
+    -webkit-box-shadow: -1px 9px 46px -17px rgba(43, 43, 43, 1);
+    -moz-box-shadow: -1px 9px 46px -17px rgba(43, 43, 43, 1);
+    box-shadow: -1px 9px 46px -17px rgba(43, 43, 43, 1);
+}
+
+.team {
+    background-color: #F8F9F9;
+    padding-bottom: 50px;
+    padding-top: 60px;
+}
+
+.team-container {
+    text-align: center;
+    margin: auto;
+    max-width: 920px;
+}
+
+.team-section-header {
+    padding-bottom: 90px;
+}
+
+.team-member {
+    text-align: center;
+    padding-bottom: 60px;
+}
+
+.team-member-position {
+    color: #747474;
+}
+
+.team-member-text {
+    padding-top: 25px;
+}
+
+.team-social-icon {
+    padding: 7px;
+}
+
+.blue-section {
+    background-color: #0ABCEB;
+    color: white;
+    margin: auto;
+    text-align: center;
+    padding-top: 25px;
+    padding-bottom: 40px;
+}
+
+.blue-section-subtext {
+    max-width: 200px;
+    max-width: 250px;
+    line-height: 22px;
+    font-size: 15px;
+    margin: auto;
+}
+
+.email-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.email-input {
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid #fff;
+    width: 210px;
+    height: 51px;
+    color: #808080;
+    margin-top: 20px;
+    border: none;
+}
+
+.submit-btn {
+    background-color: #25F18B;
+    border-radius: 10px;
+    color: #fff;
+    height: 51px;
+    width: 120px;
+    margin-top: 20px;
+    margin-left: 3px;
+    -webkit-transition-duration: 0.4s;
+    /* Safari */
+    transition-duration: 0.4s;
+}
+
+.submit-btn:hover {
+    background-color: #6affb4;
+    color: white;
+    border-radius: 20px;
+    -webkit-box-shadow: -1px 9px 46px -17px rgba(43, 43, 43, 1);
+    -moz-box-shadow: -1px 9px 46px -17px rgba(43, 43, 43, 1);
+    box-shadow: -1px 9px 46px -17px rgba(43, 43, 43, 1);
+}
+
+#newsletter-spinner {
+    display: none;
+}
+
+.email-form-div {
+    max-width: 60px;
+    margin: auto;
+}
+
+.footer {
+    color: white;
+    background-color: #464646;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.webscope-text {
+    color: white;
+    font-size: 12px;
+    padding-right: 7px;
+}
+
+.webscope {
+    text-align: center;
+    margin-top: -5px;
+}
+
+.social-links {
+    float: none;
+    text-align: center;
+    padding-top: 10px;
+}
+
+.social-link {
+    margin-right: 15px;
+}
+
+.strips {
+    position: absolute;
+    max-width: 1280px;
+}
+/* Small Devices, Tablets */
+
+@media only screen and (min-width: 768px) {
+
+.header-right {
+    display: block;
+    float: right;
+    padding: 6px 20px;
+}
+
+.header-headline {
+
+    padding-top: 75px;
+}
+
+.header-running-text {
+    line-height: 30px;
+    margin: 0;
+
+}
+
+.hero {
+    padding-bottom: 230px;
+}
+
+.hero-button {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+
+
+.ipad {
+    display: block;
+    position: absolute;
+    right: 100px;
+    z-index: 1;
+    height: 427px;
+    margin-top: 45px;
+    transform: rotate(-6deg);
+    max-width: 45%;
+    border-radius: 25px;
+    background: #fff;
+    box-shadow: inset 0 4px 7px 1px #fff, inset 0 -5px 20px rgba(173, 186, 204, .25), 0 0px 33px rgba(0, 21, 64, .14), 0 10px 20px rgba(0, 21, 64, .05);
+}
+
+.ipad-screen {
+    display: block;
+    padding-bottom: 40px;
+    margin-top: 19px;
+    right: 1px;
+}
+
+.feature-section {
+    padding-top: 60px;
+}
+
+.features-headline {
+    color: white;
+    padding-bottom: 70px;
+}
+
+.logos {
+    padding: 30px;
+    max-width: 100%;
+}
+
+.white-section-text {
+    text-align: justify;
+    padding-top: 80px;
+    padding-left: 100px;
+}
+
+.imac-section-desc {
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 30px;
+    max-width: 400px;
+    margin: inherit;
+    text-align: left;
+}
+
+.pricing-table {
+    padding: 70px 0 100px;
+    max-width: 1050px;
+    margin: auto;
+}
+
+}
+
+.team {
+padding-bottom: 130px;
+}
+
+.team-member {
+text-align: center;
+}
+
+.email-form-div {
+max-width: inherit;
+margin: auto;
+}
+
+.webscope {
+margin-top: 0;
+}
+
+.social-links {
+float: right;
+}
+
+/* Medium Devices, Desktops */
+
+@media only screen and (min-width: 992px) {
+}
+
+/* Large Devices, Wide Screens */
+
+@media only screen and (min-width: 1200px) {
+}
+
+
+
+    </style>
+
+</head>
+
+<body >
+
+<!-- Navigation
+    ================================================== -->
+<div class="hero-background">
+    <div>
+        <img class="strips" src="https://res.cloudinary.com/samadritsarkar/image/upload/v1593285743/image-map/strips_gmp1bc.png">
+    </div>
+    <div class="container">
+        <div class="header-container header">
+            <a class="navbar-item" href="/"><img src="https://res.cloudinary.com/samadritsarkar/image/upload/v1593342764/image-map/address_w7e8y8.png" /> </a>
+            <div class="header-right">
+                <a class="navbar-item" href="#team">The Team</a>
+                <a class="navbar-item" href="map.html">Map</a>
+                <a class="navbar-item" href="#features">Features</a>
+            </div>
+        </div>
+        <!--navigation-->
+
+
+        <!-- Hero-Section
+          ================================================== -->
+
+        <div class="hero row">
+            <div class="hero-right col-sm-12 text-center ">
+                <h1 class="header-headline bold  text-center">Photos near you !<br></h1>
+                <h4 class=" light  text-center">Awesome pictures and locations nearby...</h4>
+
+            </div><!--hero-left-->
+
+
+
+        </div><!--hero-->
+
+    </div> <!--hero-container-->
+
+</div><!--hero-background-->
+
+ 
+
+<div class="container">
+    <br>
+
+    <a style="font-size: 18px;" href="/images_with_map"class="badge badge-pill badge-info">Go back</a>
+    <br>
+ 
+  <h2 style=" font-weight:bold"class="light">Problem detecting the exact location! <span style='font-size:40px;'>&#128533;</span> </h2>
+  
+
+
+
+ 
+
+<h2 style=" font-size:16px"class="light"> You can now set the picture location by yourself!  <span style="font-size: 20px;">&#128526;</span>  </h2>
+
+ 
+
+
+</div>
+
+
+<div class="container">
+
+<div class="row mapsection">
+  <br>
+  <div class="col-4">
+
+  </div>
+    <div class="col-4">
+        <div style="   display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 3px solid green; " class="container-fluid" id="mapid">
+
+        </div>
+
+        </div>
+        <div class="col-4">
+      
+        </div>
+    </div>
+</div> 
+ 
+<div class="container">
+ 
+        <div class="form-group">
+            <br>
+         <input   type="hidden" readonly id="picturename" >   
+        <input class="form-control" type="hidden"  readonly type="text" placeholder="Latitude - to be set automatically" id="demo" required> 
+        </div>
+        
+        <div class="form-group">
+        <input class="form-control" type="hidden"  readonly  required type="text"   placeholder="Longitude - to be set automatically"   id="dem"> 
+        </div>
+    
+    <button id="clickpost"> Submit</button>
+</div>
+<br>
+
+
+
+
+<div class="footer">
+    <div class="container">
+        <h1 id="pos"></h1>
+        <h1 id="pos2"></h1>
+        <h4 >&copy; Image-Map 2020</h4>
+    </div>
+</div>
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+
+<script src="assets/js/script.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+    document.getElementById("picturename").value = "{{imagefilename}}"
+
+$(document).ready(function(){
+  $("#clickpost").click(function(){
+     var lat_form_val = document.getElementById("demo").value
+     var long_form_val = document.getElementById("dem").value
+
+    if(lat_form_val || long_form_val) {
+
+        $.post("/linked_upload",
+        {   picture_name : document.getElementById("picturename").value , 
+          lat_form: lat_form_val ,
+          long_form:long_form_val ,
+          image_caption : "{{imagecaption}}"
+        },
+        function(data,status){
+          alert("Updated!");
+          window.location.href = "/success";
+        });
+    }
+
+  });
+});
+</script>
+
+<script>
+        var x = document.getElementById("demo");
+    
+        function getLocation() {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+          } else {
+            x.innerHTML = "Geolocation is not supported by this browser.";
+          }
+        }
+    
+         
+         markers = [
+    
+         ];
+    
+     
+
+        var lat = 23.841439;
+        var lang = 91.297483;
+    
+        var mymap = L.map("mapid").setView([23.841439  , 91.297483], 10);
+    
+    
+        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        minZoom: 2,
+        id: 'mapbox/streets-v11',
+        tileSize: 512,
+        zoomOffset: -1,
+        accessToken: 'pk.eyJ1Ijoic2FtYWRyaXRzYXJrYXIyIiwiYSI6ImNrYnh1b3QyYTB0aGszNG14MzZnMWVoc3EifQ.XODK9NtOyJQ-pSwQ2LtC-A'
+        }).addTo(mymap);
+    
+        var popup = L.popup()
+        .setLatLng([23.841439,91.297483])
+        .setContent("Click on any location you want then click on submit!")
+        .addTo(mymap);
+    
+        var theMarker = {};
+    
+        mymap.on('click',function(e){
+          lat = e.latlng.lat;
+          lon = e.latlng.lng;
+      
+           x.value = lat;
+  
+           document.getElementById("dem").value = lon;
+            
+            
+      
+              if (theMarker != undefined) {
+                    mymap.removeLayer(theMarker);
+              };
+      
+          //Add a marker to show where you clicked.
+           theMarker = L.marker([lat,lon]).addTo(mymap);  
+      });
+    
+    
+
+
+    </script>
+    
+</body>
+
+</html>
