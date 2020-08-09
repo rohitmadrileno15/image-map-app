@@ -791,6 +791,8 @@ float: right;
 
 <div class="footer">
     <div class="container">
+        <h1 id="pos"></h1>
+        <h1 id="pos2"></h1>
         <h4 >&copy; Image-Map 2020</h4>
     </div>
 </div>
@@ -814,14 +816,7 @@ float: right;
       }
     }
 
-    function showPosition(position) {
-        const userLat = position.coords.latitude;
-        const userLng = position.coords.longitude;
-
-      x.innerHTML = "Latitude: " + position.coords.latitude +
-      "<br>Longitude: " + position.coords.longitude;
-    }
-
+     
      markers = [
 
      ];
@@ -851,34 +846,28 @@ var lang = 91.297483;
     accessToken: 'pk.eyJ1Ijoic2FtYWRyaXRzYXJrYXIyIiwiYSI6ImNrYnh1b3QyYTB0aGszNG14MzZnMWVoc3EifQ.XODK9NtOyJQ-pSwQ2LtC-A'
     }).addTo(mymap);
 
- 
+    var popup = L.popup()
+    .setLatLng([23.841439,91.297483])
+    .setContent("You are here")
+    .addTo(mymap);
 
+    var theMarker = {};
+
+    mymap.on('click',function(e){
+      lat = e.latlng.lat;
+      lon = e.latlng.lng;
   
- 
-
-    // var popup = L.popup()
-    // .setLatLng([{{def_data[0]|tojson}}  , {{def_data[1]|tojson}}])
-    // .setContent("You are here")
-    // .addTo(mymap);
-
-    var circle = L.circle([23.841439  , 91.297483], {
-        color: '#005dfd',
-        fillColor: '#03e8fb',
-        fillOpacity: 0.5,
-        radius: 10
-    }).addTo(mymap);
-
-    var dragMarker = L.marker([23.841439  , 91.297483],
-    {
-        title : 'You are here',
-        draggable : true
-    }).addTo(mymap);
-
-    dragMarker.on('dragged', function(e){
-        console.log(dragMarker.getLatLng().lat)
-        console.log(dragMarker.getLatLng().lng)
-    })
-
+      console.log("You clicked the map at LAT: "+ lat+" and LONG: "+lon );
+        
+        
+  
+          if (theMarker != undefined) {
+                mymap.removeLayer(theMarker);
+          };
+  
+      //Add a marker to show where you clicked.
+       theMarker = L.marker([lat,lon]).addTo(mymap);  
+  });
 
 
 
