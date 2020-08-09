@@ -846,7 +846,7 @@ var lang = 91.297483;
 
       {% endfor %}
 
-    var mymap = L.map("mapid").setView([lat  , lang], 10);
+    var mymap = L.map("mapid").setView([23.841439  , 91.297483], 10);
 
 
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -875,14 +875,14 @@ var lang = 91.297483;
     // .setContent("You are here")
     // .addTo(mymap);
 
-    var circle = L.circle([lat  , lang], {
+    var circle = L.circle([23.841439  , 91.297483], {
         color: '#005dfd',
         fillColor: '#03e8fb',
         fillOpacity: 0.5,
         radius: 10
     }).addTo(mymap);
 
-    var dragMarker = L.marker([lat  , lang]
+    var dragMarker = L.marker([23.841439  , 91.297483],
     {
         title : 'You are here',
         draggable : true
