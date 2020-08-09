@@ -717,17 +717,18 @@ float: right;
 
 <div class="container">
     <br>
+
     <a style="font-size: 18px;" href="/images_with_map"class="badge badge-pill badge-info">Go back</a>
     <br>
  
-  <h2 style="padding-left:20px;"class="light">Photos nearby...</h2>
-  <br>
+  <h2 style=" font-weight:bold"class="light">Problem detecting the exact location! <span style='font-size:40px;'>&#128533;</span> </h2>
+  
 
 
 
  
 
-<h2 style="padding-left:20px;"class="light"> Its empty near you try <a href="/"> uploading</a> ones...</h2>
+<h2 style=" font-size:16px"class="light"> You can now set the picture location by yourself!  <span style="font-size: 20px;">&#128526;</span>  </h2>
 
  
 
@@ -739,11 +740,6 @@ float: right;
 
 <div class="row ml-2">
   <br>
-
-
-
-
-
     <div class="col-sm-6">
         <div style="   display: flex;
         justify-content: center;
@@ -754,12 +750,24 @@ float: right;
 
         </div>
     </div>
-</div><!--white-section-text-section--->
-
-
-<p id="demo"></p>
+</div> 
+ 
+<div class="container">
+ 
+        <div class="form-group">
+            <br>
+         <input   type="hidden" readonly id="picturename" >   
+        <input class="form-control" type="hidden"  readonly type="text" placeholder="Latitude - to be set automatically" id="demo" required> 
+        </div>
+        
+        <div class="form-group">
+        <input class="form-control" type="hidden"  readonly  required type="text"   placeholder="Longitude - to be set automatically"   id="dem"> 
+        </div>
+    
+    <button id="clickpost"> Submit</button>
+</div>
 <br>
-<p id="dem"></p>
+
 
 
 
@@ -779,11 +787,36 @@ float: right;
         crossorigin="anonymous"></script>
 
 <script src="assets/js/script.js"></script>
-<script>
- 
 
- 
-	 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+    document.getElementById("picturename").value = "{{imagefilename}}"
+
+$(document).ready(function(){
+  $("#clickpost").click(function(){
+     var lat_form_val = document.getElementById("demo").value
+     var long_form_val = document.getElementById("dem").value
+
+    if(lat_form_val || long_form_val) {
+
+        $.post("/linked_upload",
+        {   picture_name : document.getElementById("picturename").value , 
+          lat_form: lat_form_val ,
+          long_form:long_form_val ,
+          image_caption : "{{imagecaption}}"
+        },
+        function(data,status){
+          alert("Updated!");
+          window.location.href = "/success";
+        });
+    }
+
+  });
+});
+</script>
+
+<script>
         var x = document.getElementById("demo");
     
         function getLocation() {
@@ -819,7 +852,7 @@ float: right;
     
         var popup = L.popup()
         .setLatLng([23.841439,91.297483])
-        .setContent("You are here")
+        .setContent("Click on any location you want then click on submit!")
         .addTo(mymap);
     
         var theMarker = {};
@@ -828,9 +861,9 @@ float: right;
           lat = e.latlng.lat;
           lon = e.latlng.lng;
       
-           x.innerHTML = lat;
+           x.value = lat;
   
-           document.getElementById("dem").innerHTML = lon;
+           document.getElementById("dem").value = lon;
             
             
       

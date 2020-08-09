@@ -75,11 +75,25 @@ def upload():
             db.session.commit()
             return "<div> <h1> DONE! <br>  <a href='/images_with_map'> See the map? </a> or <a href='/'> Go to home </a> </h1> </div>"
         else:
-            return render_template('authenticity.html')
+            image_caption = form.caption_field.data
+            return render_template('mapNew.html', imagefilename = picture_file , imagecaption = image_caption )
 
     else:
         return render_template('upload.html', form = form )
 
+
+@app.route('/linked_upload', methods = ["GET" ,  "POST"] )
+def linked_upload():
+    if(request.method == "POST"):
+        print("post req")
+        lat_value = request.form['lat_form'] 
+        long_value = request.form['long_form'] 
+        picture_name =  request.form['picture_name']
+        image_caption = request.form['image_caption']
+        newFile = Post(caption_  = image_caption ,image_longitude = long_value , image_latitude = lat_value, image_pic = picture_name )
+        db.session.add(newFile)
+        db.session.commit() 
+        return "Uploaded"
 
 
 
@@ -126,6 +140,12 @@ def images_with_map():
              return render_template('map.html' , def_data = def_data , data_value_all_maps = empty_data_arr )
 
     return render_template("getDistance.html" )
+
+
+@app.route('/success', methods=['GET'])
+def success():
+    return render_template("authenticity.html" )
+
 
 @app.errorhandler(404)
 def not_found(e):
