@@ -1,8 +1,9 @@
 flask
 flask_sqlalchemy
 geocoder
-secrets
 requests
 flask_wtf
 wtforms
 gunicorn
+GPSPhoto
+
