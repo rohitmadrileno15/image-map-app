@@ -831,7 +831,8 @@ float: right;
 
     // var mymap = L.map("mapid").setView([{{def_data[0]|tojson}}  , {{def_data[1]|tojson}}], 10);
 
-
+var lat = 23.841439;
+var lang = 91.297483;
 
     {% for data_row in data_value_all_maps %}
 
@@ -845,7 +846,7 @@ float: right;
 
       {% endfor %}
 
-    var mymap = L.map("mapid").setView([{{def_data[0]|tojson}}  , {{def_data[1]|tojson}}], 10);
+    var mymap = L.map("mapid").setView([lat  , lang], 10);
 
 
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -874,22 +875,22 @@ float: right;
     // .setContent("You are here")
     // .addTo(mymap);
 
-    var circle = L.circle([{{def_data[0]|tojson}}  , {{def_data[1]|tojson}}], {
+    var circle = L.circle([lat  , lang], {
         color: '#005dfd',
         fillColor: '#03e8fb',
         fillOpacity: 0.5,
-        radius: {{def_data[2]|tojson}}
+        radius: 10
     }).addTo(mymap);
 
-    var dragMarker = L.marker([{{def_data[0]|tojson}}  , {{def_data[1]|tojson}}],
+    var dragMarker = L.marker([lat  , lang]
     {
-        title : 'You are here'
+        title : 'You are here',
         draggable : true
     }).addTo(mymap);
 
     dragMarker.on('dragged', function(e){
-        console.log(marker.getLatLng().lat)
-        console.log(marker.getLatLng().lng)
+        console.log(dragMarker.getLatLng().lat)
+        console.log(dragMarker.getLatLng().lng)
     })
 
     console.log("distance" , {{def_data[2]|tojson}})
