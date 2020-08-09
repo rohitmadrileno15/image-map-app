@@ -713,54 +713,23 @@ float: right;
 
 </div><!--hero-background-->
 
-<script>
-    {% if data_alert %}
-
-        alert("{{data_alert}}")
-    
-    {% endif %}
-</script>
+ 
 
 <div class="container">
     <br>
     <a style="font-size: 18px;" href="/images_with_map"class="badge badge-pill badge-info">Go back</a>
     <br>
-{% if data_value_all_maps %}
+ 
   <h2 style="padding-left:20px;"class="light">Photos nearby...</h2>
   <br>
 
 
 
-  <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-  <div class="carousel-inner">
-    {% for data_row in data_value_all_maps %}
-    <div  style="  width:auto;
-                text-align:center;
-                padding:20px;"class="carousel-item">
-      <img  class="d-block w-100" style=" width: 100%;
-                height: 100%;
-                object-fit: contain; " src= "{{url_for('static', filename = data_row.image_pic )}}" alt="Third slide">
-    </div>
-
-    {% endfor %}
-
-  </div>
-  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
-</div>
-
-{% else %}
+ 
 
 <h2 style="padding-left:20px;"class="light"> Its empty near you try <a href="/"> uploading</a> ones...</h2>
 
-
-{% endif %}
+ 
 
 
 </div>
@@ -776,7 +745,7 @@ float: right;
 
 
     <div class="col-sm-6">
-        <div id="mapid">
+        <div style="left: 50%;" id="mapid">
 
         </div>
 
@@ -786,6 +755,8 @@ float: right;
 
 
 <p id="demo"></p>
+<br>
+<p id="demo1"></p>
 
 
 
@@ -804,35 +775,12 @@ float: right;
 
 <script src="assets/js/script.js"></script>
 <script>
-    var x = document.getElementById("demo");
+   
 
-    function getLocation() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
-      } else {
-        x.innerHTML = "Geolocation is not supported by this browser.";
-      }
-    }
-
-    function showPosition(position) {
-        const userLat = position.coords.latitude;
-        const userLng = position.coords.longitude;
-
-      x.innerHTML = "Latitude: " + position.coords.latitude +
-      "<br>Longitude: " + position.coords.longitude;
-    }
-
-     markers = [
-
-     ];
+     
+    
 
 
-
-
-    // var mymap = L.map("mapid").setView([{{def_data[0]|tojson}}  , {{def_data[1]|tojson}}], 10);
-
-var lat = 23.841439;
-var lang = 91.297483;
 
   
 
@@ -851,34 +799,25 @@ var lang = 91.297483;
     accessToken: 'pk.eyJ1Ijoic2FtYWRyaXRzYXJrYXIyIiwiYSI6ImNrYnh1b3QyYTB0aGszNG14MzZnMWVoc3EifQ.XODK9NtOyJQ-pSwQ2LtC-A'
     }).addTo(mymap);
 
- 
-
   
- 
 
-    // var popup = L.popup()
-    // .setLatLng([{{def_data[0]|tojson}}  , {{def_data[1]|tojson}}])
-    // .setContent("You are here")
-    // .addTo(mymap);
+    var theMarker = {};
 
-    var circle = L.circle([23.841439  , 91.297483], {
-        color: '#005dfd',
-        fillColor: '#03e8fb',
-        fillOpacity: 0.5,
-        radius: 10
-    }).addTo(mymap);
-
-    var dragMarker = L.marker([23.841439  , 91.297483],
-    {
-        title : 'You are here',
-        draggable : true
-    }).addTo(mymap);
-
-    dragMarker.on('dragged', function(e){
-        console.log(dragMarker.getLatLng().lat)
-        console.log(dragMarker.getLatLng().lng)
-    })
-
+    mymap.on('click',function(e){
+      lat = e.latlng.lat;
+      lon = e.latlng.lng;
+  
+            console.log("You clicked the map at LAT: "+ lat+" and LONG: "+lon );
+         document.getElementById("demo").innerHTML = lat ;
+         document.getElementById("demo1").innerHTML = lon ;
+  
+          if (theMarker != undefined) {
+                map.removeLayer(theMarker);
+          };
+  
+      //Add a marker to show where you clicked.
+       theMarker = new L.marker([lat,lon]).addTo(mymap);  
+  });
 
 
 
