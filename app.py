@@ -1,5 +1,5 @@
 from flask import Flask,redirect, url_for,render_template, request,session,flash,request
-import os,secrets
+import os
 from flask_sqlalchemy import SQLAlchemy
 import geocoder,requests,json
 from flask_wtf import FlaskForm
@@ -10,6 +10,8 @@ from flask import jsonify
 from check_script import get_data
 from get_geo_data import geo_data_of_distance
 from map_func import mainfunc
+import random
+import string
 
 app = Flask(__name__)
 
@@ -42,7 +44,11 @@ class UploadForm(FlaskForm):
 
 
 def save_picture(form_picture):
-    hashed_caption = secrets.token_hex(16)
+    
+    letters_and_digits = string.ascii_letters + string.digits
+    result_str = ''.join((random.choice(letters_and_digits) for i in range(20)))
+     
+    hashed_caption = result_str
     f_name , f_ext = os.path.splitext(form_picture.filename)
     fn = hashed_caption+f_name
     picture_fn = fn + f_ext
