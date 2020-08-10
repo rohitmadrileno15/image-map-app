@@ -9,12 +9,15 @@ from wtforms.validators import DataRequired,Length, Email , EqualTo, ValidationE
 from flask import jsonify
 from check_script import get_data
 from get_geo_data import geo_data_of_distance
+from map_func import mainfunc
 
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = '450933c08c5ab75e79619102eddf47dee813a9d6'
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+
+app.jinja_env.filters['zip'] = zip
 
 db = SQLAlchemy(app)
 
@@ -108,39 +111,59 @@ def images_with_map():
         return render_template("getDistance.html" , data_alert = greet )
 
 
-
     empty_data_arr = []
+    route_data = []
 
     if(request.method == 'POST'):
         def_lat = float(request.form.get("textlat"))
 
         def_long = float(request.form.get("textlon"))
 
-        print(def_lat)
-        print(def_long)
+        r = requests.get(url = f"https://api.opencagedata.com/geocode/v1/json?q={def_lat}+{def_long}&key=ba461a1ba3eb43dab95f73e5e684cd23" ) 
+        get_city_user =  r.json()
+                
+        initial_user_value = get_city_user['results'][0]['components']['county']
 
         distance = int(request.form.get("cars"))
         print("distance" , distance)
         def_data = [def_lat , def_long , distance * 1000]
 
-
+        county_array = []
         for row in geo_data_info:
             print("")
             lat1= (row.image_latitude)
             long1 = (row.image_longitude)
              # print(lat1)
              # print(long1)
-            print(row)
+     
             displacement = geo_data_of_distance( float(def_lat) , float(def_long) , float(lat1) , float(long1) )
             print("displacement ",  displacement) 
+            
 
             if (distance > displacement or distance == displacement):
-                
-                print("appended")
+
+                r = requests.get(url = f"https://api.opencagedata.com/geocode/v1/json?q={lat1}+{long1}&key=ba461a1ba3eb43dab95f73e5e684cd23" ) 
+                get_city =  r.json()
+                try:
+                    county_value = get_city['results'][0]['components']['county']
+                    county_array.append(county_value)
+                    print(county_value)
+
+                    user_route_link = f"https://www.mapquestapi.com/directions/v2/route?key=UbH7DkjS05mBLP5lrTcqEiAGtsvq7tA6&from={initial_user_value}&to={county_value}&outFormat=json&ambiguities=ignore&routeType=fastest&doReverseGeocode=false&enhancedNarrative=false&avoidTimedConditions=false"
+                    route_data.append(user_route_link)
+
+                except:
+                    county_array.append("local")
+                    print("except" , county_array)
+                    route_data.append("invalid")
+
+                 
+                print("appended" )
                 empty_data_arr.append(row)
 
             print(empty_data_arr)
-        return render_template('map.html' , def_data = def_data , data_value_all_maps = empty_data_arr )
+            print(county_array)
+        return render_template('map.html' ,route_data = route_data , initial_user_value = initial_user_value ,  def_data = def_data , data_value_all_maps = empty_data_arr , county_array = county_array )
 
     return render_template("getDistance.html" )
 

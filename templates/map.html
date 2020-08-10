@@ -726,19 +726,26 @@ float: right;
     <a style="font-size: 18px;" href="/images_with_map"class="badge badge-pill badge-info">Go back</a>
     <br>
 {% if data_value_all_maps %}
-  <h2 style="padding-left:20px;"class="light">Photos nearby... &#128567;</h2>
+  <h2 style="padding-left:20px;"class="light">Photos nearby {{initial_user_value}} ... &#128567;</h2>
   <br>
 
    
 <div style="border: 4px solid black; padding:10px;" class="w3-content w3-display-container">
 
     
-    {% for data_row in data_value_all_maps %}
+    {% for data_row , county_val1  ,county_val2 in data_value_all_maps|zip(county_array , route_data ) %}
     <div class="w3-display-container mySlides">
         <img src="{{url_for('static', filename = data_row.image_pic )}}" style="width:100%">
         <div style="font-weight:600;" class="w3-display-bottomleft w3-large w3-container w3-padding-16 w3-gray">
             {{data_row.caption_}}
         </div>
+        <div style="font-weight:400;" class="w3-display-topright w3-medium w3-container w3-padding-12 w3-black">
+           {{county_val1}}
+        </div>
+        <div style="font-weight:400;" class="w3-display-bottomright w3-medium w3-container w3-padding-12 w3-blue">
+            <a href="{{county_val2}}">Route</a>
+         </div>
+        
     </div>
 
     {% endfor %}
