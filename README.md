@@ -25,6 +25,11 @@ Again, if you have been to a place and got wonderful pics, you can simply upload
 1. [Rohit Saha](https://github.com/rohitmadrileno15/)
 2. [Samadrit Sarkar](https://github.com/samadritsarkar2)
 
+## Try it out
+Try it your self on local environment
+* pip install -r requirements.txt
+* python app.py
+
 Contact if any problem persists during runninng the application!
 
 ## License 
