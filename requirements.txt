@@ -173,7 +173,6 @@ python3-openid==3.1.0
 pyttsx3==2.71
 pytube==9.6.0
 pytz==2019.3
-PyVirtualDisplay==0.2.5
 pywin32==227
 pywin32-ctypes==0.2.0
 PyYAML==5.3.1
@@ -190,7 +189,6 @@ s3transfer==0.2.1
 service-identity==18.1.0
 simplejson==3.17.0
 six==1.13.0
-Slowloris==0.2.1
 slytherin==2020.4.28
 snowballstemmer==2.0.0
 sortedcontainers==2.1.0
@@ -201,7 +199,6 @@ sqlite-utils==2.3.1
 sqlparse==0.3.0
 starlette==0.13.4
 stevedore==1.31.0
-stripe==2.48.0
 tabula-py==2.0.4
 tabulate==0.8.6
 tblib==1.6.0
