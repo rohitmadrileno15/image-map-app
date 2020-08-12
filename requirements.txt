@@ -139,12 +139,6 @@ pycparser==2.20
 pycryptodome==3.9.6
 pycurl==7.43.0.5
 pydantic==1.5.1
-PyDispatcher==2.0.5
-pydocstyle==5.0.2
-pydub==0.24.1
-pyfiglet==0.8.post1
-pyflakes==2.2.0
-pygame==1.9.6
 Pygments==2.5.2
 PyHamcrest==2.0.2
 PyInstaller==3.6

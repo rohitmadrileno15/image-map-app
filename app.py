@@ -153,7 +153,7 @@ def images_with_map():
                 try:
                     county_value = get_city['results'][0]['components']['county']
                     county_array.append(county_value)
-                    print(county_value)
+                    print("county_value" , county_value)
 
                     user_route_link = f"https://www.mapquestapi.com/directions/v2/route?key=UbH7DkjS05mBLP5lrTcqEiAGtsvq7tA6&from={initial_user_value}&to={county_value}&outFormat=json&ambiguities=ignore&routeType=fastest&doReverseGeocode=false&enhancedNarrative=false&avoidTimedConditions=false"
                     route_data.append(user_route_link)
