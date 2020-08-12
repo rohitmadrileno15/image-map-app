@@ -163,7 +163,6 @@ python-engineio==3.12.1
 python-jose==3.1.0
 python-jsonrpc-server==0.3.4
 python-language-server==0.33.0
-python3-openid==3.1.0
 pywin32==227
 pywin32-ctypes==0.2.0
 requests==2.22.0
