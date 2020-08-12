@@ -57,11 +57,7 @@ Flask-Mobility==1.0.0
 Flask-MongoAlchemy==0.7.2
 Flask-MySQL==1.5.1
 Flask-OpenTracing==1.1.0
-Flask-Pusher==3.0
-Flask-PyMongo==2.3.0
-Flask-QRcode==3.0.0
 Flask-Session==0.3.2
-Flask-SocketIO==4.3.0
 Flask-SQLAlchemy==2.4.1
 Flask-Track-Usage==2.0.0
 Flask-Uploads==0.2.1
