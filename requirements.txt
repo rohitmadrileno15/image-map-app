@@ -7,4 +7,5 @@ wtforms
 gunicorn
 GPSPhoto
 geopy
+Pillow
 exifread
