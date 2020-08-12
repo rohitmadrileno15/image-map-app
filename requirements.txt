@@ -6,4 +6,5 @@ flask_wtf
 wtforms
 gunicorn
 GPSPhoto
+geopy
 
