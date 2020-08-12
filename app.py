@@ -53,7 +53,7 @@ def save_picture(form_picture):
     fn = hashed_caption+f_name
     picture_fn = fn + f_ext
     print(picture_fn)
-    picture_path = os.path.join(current_app.root_path , 'static' , picture_fn)
+    picture_path = os.path.join(app.root_path , 'static' , picture_fn)
     form_picture.save(picture_path)
     return picture_fn
 
