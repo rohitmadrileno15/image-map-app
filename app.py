@@ -1,5 +1,6 @@
 from flask import Flask,redirect, url_for,render_template, request,session,flash,request
 import os
+from PIL import Image
 from flask_sqlalchemy import SQLAlchemy
 import geocoder,requests,json
 from flask_wtf import FlaskForm
@@ -52,9 +53,19 @@ def save_picture(form_picture):
     f_name , f_ext = os.path.splitext(form_picture.filename)
     fn = hashed_caption+f_name
     picture_fn = fn + f_ext
-    print(picture_fn)
     picture_path = os.path.join(app.root_path , 'static' , picture_fn)
-    form_picture.save(picture_path)
+    print(picture_fn)
+    i = Image.open(form_picture)
+
+    # width_ = i.size[0]
+    # height_ = i.size[1]
+    # aspect_ratio = float(width_ / height_)
+    # new_height = float(1080 * aspect_ratio)
+
+    # i = i.resize((1080, 450))
+
+    i.save(picture_path)
+    # form_picture.save(picture_path)
     return picture_fn
 
 
@@ -127,8 +138,11 @@ def images_with_map():
 
         r = requests.get(url = f"https://api.opencagedata.com/geocode/v1/json?q={def_lat}+{def_long}&key=ba461a1ba3eb43dab95f73e5e684cd23" ) 
         get_city_user =  r.json()
-                
-        initial_user_value = get_city_user['results'][0]['components']['county']
+
+        try:           
+            initial_user_value = get_city_user['results'][0]['components']['county']
+        except:
+            initial_user_value = "local"
 
         distance = int(request.form.get("cars"))
         print("distance" , distance)
