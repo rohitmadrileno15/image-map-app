@@ -27,7 +27,7 @@ colorama==0.4.3
 colouration==2020.4.28
 configobj==5.0.6
 constantly==15.1.0
-cryptography==2.9
+cryptography==3.2
 cssselect==1.1.0
 cycler==0.10.0
 db-to-sqlite==1.1.1
