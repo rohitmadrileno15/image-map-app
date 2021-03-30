@@ -139,7 +139,7 @@ pycparser==2.20
 pycryptodome==3.9.6
 pycurl==7.43.0.5
 pydantic==1.5.1
-Pygments==2.5.2
+Pygments==2.7.4
 PyHamcrest==2.0.2
 PyInstaller==3.6
 PyJWT==1.7.1
